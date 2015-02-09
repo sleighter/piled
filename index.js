@@ -9,9 +9,6 @@ server.listen(process.env.PORT || 5000);
 
 var wss = new WebSocketServer({server: server})
 
-
-
-app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
