@@ -17,14 +17,14 @@ app.get('/', function(request, response) {
 
 app.post('/on', function(req, resp) {
   wss.clients.forEach(function (client) {
-    client.send('on');
+    client.send({action:'on'});
   });
   resp.send('turning on...');
 });
 
 app.post('/off', function(req, resp) {
   wss.clients.forEach(function each(client) {
-    client.send('off');
+    client.send({action: 'off'});
   });
   resp.send('turning off...');
 });
