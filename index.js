@@ -16,25 +16,16 @@ app.get('/', function(request, response) {
 });
 
 app.post('/on', function(req, resp) {
-  wss.broadcast = function broadcast(data) {
-    wss.clients.forEach(function each(client) {
-      client.send({message:'on'});
-    });
-  };
-  wss.broadcast = function broadcast(data) {
-    wss.clients.forEach(function each(client) {
-      client.send('on');
-    });
-  };
+  wss.clients.forEach(function (client) {
+    client.send('on');
+  });
   resp.send('turning on...');
 });
 
 app.post('/off', function(req, resp) {
-  wss.broadcast = function broadcast(data) {
-    wss.clients.forEach(function each(client) {
-      client.send('off');
-    });
-  };
+  wss.clients.forEach(function each(client) {
+    client.send('off');
+  });
   resp.send('turning off...');
 });
 
