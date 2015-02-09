@@ -17,7 +17,7 @@ app.post('/on', function(req, resp) {
       client.send('on');
     });
   };
-  response.send('success');
+  resp.send('turning on...');
 });
 
 app.post('/off', function(req, resp) {
@@ -26,6 +26,7 @@ app.post('/off', function(req, resp) {
       client.send('off');
     });
   };
+  resp.send('turning off...');
 });
 
 app.listen(app.get('port'), function() {
