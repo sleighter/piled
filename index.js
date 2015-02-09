@@ -1,8 +1,15 @@
 var express = require('express');
+var http = require('http');
 var WebSocketServer = require('ws').Server;
-var wss = new WebSocketServer({port: 8080})
 var app = express();
-var clients = [];
+
+
+var server = http.createServer(app);
+server.listen(process.env.PORT || 5000);
+
+var wss = new WebSocketServer({server: server})
+
+
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));

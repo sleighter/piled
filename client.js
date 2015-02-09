@@ -1,4 +1,4 @@
-var WS_URL = 'ws://serene-earth-2066.herokuapp.com:8080';
+var WS_URL = 'ws://serene-earth-2066.herokuapp.com';
 var GREEN_PIN = 17
 var blaster = require('pi-blaster.js')
 var WebSocket = require('ws');
