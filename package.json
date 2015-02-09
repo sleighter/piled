@@ -1,0 +1,29 @@
+{
+  "name": "piled",
+  "version": "0.0.1",
+  "description": "Web LED control for Raspberry Pi",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "~4.9.x",
+    "ws": "0.7.1",
+    "pi-blaster.js": "0.0.2"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sleighter/piled"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "raspberry pi",
+    "led"
+  ],
+  "license": "MIT"
+}

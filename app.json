@@ -1,0 +1,7 @@
+{
+  "name": "piled - Web LED Controller for RPi",
+  "description": "Websocket server and client for LED control.",
+  "repository": "https://github.com/sleighter/piled",
+  "logo": "",
+  "keywords": ["node", "express", "static"]
+}
