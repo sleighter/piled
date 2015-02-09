@@ -1,1 +1,2 @@
-web: node index.js
+server: node index.js
+client: node client.js

@@ -1,14 +1,14 @@
-var WS_URL = 'ws://serene-earth-2066.herokuapp.com';
-var GREEN_PIN = 17
-var blaster = require('pi-blaster.js')
-var WebSocket = require('ws');
-var client = new WebSocket(WS_URL);
+var WS_URL = process.env.PILED_SERVER_URL;
+var GREEN_PIN = 17;
+var blaster = require('pi-blaster.js');
+var io = require('socket.io-client');
+var socket = io(WS_URL);
 
-client.on('connection', function(){
+socket.on('connection', function(){
   console.log('connected');
 });
 
-client.on('message', function(data, flags) {
+socket.on('control', function(data, flags) {
   console.log(data)
   if(data == 'on'){
     console.log("Setting pin: " + GREEN_PIN + " to 1")

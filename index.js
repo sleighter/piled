@@ -1,13 +1,9 @@
 var express = require('express');
-var http = require('http');
-var WebSocketServer = require('ws').Server;
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-
-var server = http.createServer(app);
-server.listen(process.env.PORT || 5000);
-
-var wss = new WebSocketServer({server: server})
+server.listen(process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
@@ -16,16 +12,12 @@ app.get('/', function(request, response) {
 });
 
 app.post('/on', function(req, resp) {
-  wss.clients.forEach(function (client) {
-    client.send('on');
-  });
+  io.emit('control', 'on');
   resp.send('turning on...');
 });
 
 app.post('/off', function(req, resp) {
-  wss.clients.forEach(function each(client) {
-    client.send('off');
-  });
+  io.emit('control', 'off')
   resp.send('turning off...');
 });
 
@@ -33,6 +25,6 @@ app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
 
-wss.on('connection', function(ws){
+io.on('connection', function(socket){
   console.log("New connection.");
 });
