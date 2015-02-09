@@ -1,5 +1,5 @@
 var express = require('express');
-var ws = require('ws').Server;
+var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: 8080})
 var app = express();
 var clients = [];
