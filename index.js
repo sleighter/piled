@@ -18,6 +18,11 @@ app.get('/', function(request, response) {
 app.post('/on', function(req, resp) {
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
+      client.send({'on'});
+    });
+  };
+  wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
       client.send('on');
     });
   };
