@@ -22,7 +22,6 @@ app.post('/off', function(req, resp) {
 });
 
 app.post('/color', function(req, resp) {
-  inspect req;
   var params = JSON.parse(req.body);
   io.emit('color', params);
 });
