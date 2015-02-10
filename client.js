@@ -15,10 +15,13 @@ socket.on('power', function(data) {
   LEDController.setPower(data == 'on');
 });
 
-socket.on('color', function(colorStr) {
-  console.log(data);
-  var rgb = new RGBColor(colorStr);
-  if(rgb.ok){
+socket.on('color', function(colors) {
+  var rgb = colors;
+  console.log("Colors are: " + colors)
+  if(colors instanceof String){
+    rgb = new RGBColor(colors);
+  }
+  if(!rgb || rgb.ok){
     console.log("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
     LEDController.set(rgb);
   }

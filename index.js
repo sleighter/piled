@@ -2,10 +2,12 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-server.listen(process.env.PORT || 3000);
+var bodyParser = require('body-parser');
+var port = process.env.PORT || 3030;
+server.listen(port);
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
 
 app.get('/', function(request, response) {
   response.send('Hello World!');
@@ -22,12 +24,14 @@ app.post('/off', function(req, resp) {
 });
 
 app.post('/color', function(req, resp) {
-  var params = JSON.parse(req.body);
-  io.emit('color', params);
+  var params = req.body;
+  io.emit('color', params.color);
+  console.log("Set color to: " + params);
+  resp.send("Set color to: " + params);
 });
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'));
+app.listen(port, function() {
+  console.log("Node app is running at localhost:" + port);
 });
 
 io.on('connection', function(socket){
