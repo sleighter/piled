@@ -3,8 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
-var port = process.env.PORT ? process.env.PORT : 3030;
-server.listen(port);
+server.listen(process.env.PORT);
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
@@ -28,10 +27,6 @@ app.post('/color', function(req, resp) {
   io.emit('color', params.color);
   console.log("Set color to: " + params);
   resp.send("Set color to: " + params);
-});
-
-app.listen(port, function() {
-  console.log("Node app is running at localhost:" + port);
 });
 
 io.on('connection', function(socket){
