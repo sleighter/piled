@@ -4,6 +4,8 @@ var BLUE_PIN = 19;
 
 var Blaster = require('pi-blaster.js');
 
+module.exports = { set: set };
+
 function set(colorParams){
   try{
     color = colorParams.color;

@@ -2,7 +2,7 @@ var LAST_COLOR_KEY = 'last-color';
 var ColorController = require('./color-controller.js');
 var Store = require('jfs');
 var db = new Store("data");
-
+module.exports = { setPower: setPower, setColor: setColor };
 function setPower(on){
   if(on){
     db.get(LAST_COLOR_KEY, function(err, last_color){
@@ -21,7 +21,7 @@ function setColor(colorParams){
   var params = {
     color: colorParams,
     success: function(c){
-      console.log("Color successfully set to")
+      console.log("Color successfully set to " + formatColor(c));
       db.save(LAST_COLOR_KEY, c);
     },
     error: function(e){
@@ -30,4 +30,8 @@ function setColor(colorParams){
   };
 
   ColorController.set(params)
+}
+
+function formatColor(color){
+  return "R:" + color.r + " G:" + color.g + " B:" + color.b;
 }
