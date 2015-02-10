@@ -18,7 +18,7 @@ socket.on('power', function(data) {
 socket.on('color', function(colors) {
   var rgb = colors;
   console.log("Colors are: " + colors)
-  if(colors instanceof String){
+  if(typeof colors == "string"){
     rgb = new RGBColor(colors);
     if(!rgb.ok){
       console.log("Error parsing color data.");
