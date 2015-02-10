@@ -12,7 +12,7 @@ socket.on('connection', function(){
 socket.on('power', function(data) {
   var power = data == 'on';
   console.log("Turning power " + power ? 'ON' : 'OFF');
-  LEDController.setPower(data == 'on');
+  LEDController.setPower(power);
 });
 
 socket.on('color', function(colors) {
@@ -20,9 +20,13 @@ socket.on('color', function(colors) {
   console.log("Colors are: " + colors)
   if(colors instanceof String){
     rgb = new RGBColor(colors);
+    if(!rgb.ok){
+      console.log("Error parsing color data.");
+      return;
+    }
   }
-  if(!rgb || rgb.ok){
+  if(rgb){
     console.log("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
-    LEDController.set(rgb);
+    LEDController.setColor(rgb);
   }
 });

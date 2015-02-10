@@ -22,7 +22,9 @@ function setColor(colorParams){
     color: colorParams,
     success: function(c){
       console.log("Color successfully set to " + formatColor(c));
-      db.save(LAST_COLOR_KEY, c);
+      if(c.r > 0 || c.b > 0 || c.g > 0){
+        db.save(LAST_COLOR_KEY, c);
+      }
     },
     error: function(e){
       console.log("Error: " + e);
