@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
-var port = process.env.PORT || 3030;
+var port = process.env.PORT ? process.env.PORT : 3030;
 server.listen(port);
 
 app.use(express.static(__dirname + '/public'));
