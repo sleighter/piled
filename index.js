@@ -12,13 +12,19 @@ app.get('/', function(request, response) {
 });
 
 app.post('/on', function(req, resp) {
-  io.emit('control', 'on');
+  io.emit('power', 'on');
   resp.send('turning on...');
 });
 
 app.post('/off', function(req, resp) {
-  io.emit('control', 'off')
+  io.emit('power', 'off')
   resp.send('turning off...');
+});
+
+app.post('/color', function(req, resp) {
+  inspect req;
+  var params = JSON.parse(req.body);
+  io.emit('color', params);
 });
 
 app.listen(app.get('port'), function() {
