@@ -44,7 +44,7 @@ PILED_SERVER_URL=ws://<hostname-of-piled-server> node client.js
 To set the client to run at start-up, check out [node-startup](https://github.com/chovy/node-startup) for a nicely written init.d script for node apps.
 
 # Hardware
-The Pi's GPIO cannot directly power leds, a driver board is required. [https://learn.adafruit.com/rgb-led-strips/usage](This Adafruit tutorial) provides a good basic design for powering led strip lights.
+The Pi's GPIO cannot directly power leds, a driver board is required. [This Adafruit tutorial](https://learn.adafruit.com/rgb-led-strips/usage) provides a good basic design for powering led strip lights.
 
 # Other Components
 rgbcolor.js - http://www.phpied.com/rgb-color-parser-in-javascript/ - Converts css colors and hex codes to easy-to-use `{r:0, g:0, b:0}` objects. - Converted to a node module and included in this repo.
