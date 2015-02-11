@@ -4,7 +4,7 @@ piled - A web LED controller and client for Raspberry Pi
 Written with Node.js
 
 # Installation
-## Web
+## Server
 The web component is heroku-ready. The Procfile is suitable for use with [foreman](https://github.com/ddollar/foreman) or [node-foreman](https://github.com/strongloop/node-foreman).
 Run locally with
 ```
