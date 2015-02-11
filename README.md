@@ -32,7 +32,7 @@ npm install
 
 ### Run it - Quick start
 ```
-## Default PIN map
+## Default GPIO PIN map
 ## RED_PIN   = 18
 ## GREEN_PIN = 17
 ## BLUE_PIN  = 19
