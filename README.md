@@ -12,7 +12,8 @@ node index.js
 ```
 
 ## Client
-### SSH to your Pi, update apt-get, install git, node, and npm, and clone piled repo
+### Prepare the Pi
+SSH to your Pi, update apt-get, install git, node, and npm, and clone piled repo
 ```
 ssh pi@<ip-of-raspberry-pi>
 sudo apt-get update
