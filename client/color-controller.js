@@ -1,6 +1,6 @@
-var RED_PIN = 16;
-var GREEN_PIN = 20;
-var BLUE_PIN = 21;
+var RED_PIN = 17;
+var GREEN_PIN = 27;
+var BLUE_PIN = 22;
 
 var Blaster = require('pi-blaster.js');
 
