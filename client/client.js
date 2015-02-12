@@ -2,8 +2,8 @@ var WS_URL = process.env.PILED_SERVER_URL;
 var io = require('socket.io-client');
 var socket = io(WS_URL);
 
-var RGBColor = require('./client/rgbcolor.js');
-var LEDController = require('./client/led-controller.js');
+var RGBColor = require('./rgbcolor.js');
+var LEDController = require('./led-controller.js');
 
 socket.on('connection', function(){
   console.log('connected');
