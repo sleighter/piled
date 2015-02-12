@@ -1,15 +1,15 @@
 {
-  "name": "piled",
+  "name": "piled-client",
   "version": "0.0.1",
-  "description": "Web LED control for Raspberry Pi",
-  "main": "index.js",
+  "description": "LED control for Raspberry Pi",
+  "main": "client.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node client.js"
   },
   "dependencies": {
-    "express": "~4.9.x",
-    "socket.io": "1.3.3",
-    "body-parser": "1.11.0"
+    "socket.io-client": "1.3.3",
+    "pi-blaster.js": "0.0.2",
+    "jfs": ">=0.1.7"
   },
   "engines": {
     "node": "0.10.x"
