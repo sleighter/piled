@@ -47,6 +47,8 @@ To set the client to run at start-up, check out [node-startup](https://github.co
 The Pi's GPIO cannot directly power leds, a driver board is required. [This Adafruit tutorial](https://learn.adafruit.com/rgb-led-strips/usage) provides a good basic design for powering led strip lights.
 
 # Other Components
-*rgbcolor.js* - http://www.phpied.com/rgb-color-parser-in-javascript/ - Converts css colors and hex codes to easy-to-use `{r:0, g:0, b:0}` objects. - Converted to a node module and included in this repo.
+[*rgbcolor.js*](http://www.phpied.com/rgb-color-parser-in-javascript/) - Converts css colors and hex codes to easy-to-use `{r:0, g:0, b:0}` objects. - Converted to a node module and included in this repo.
 
-*pi-blaster.js* - https://github.com/sarfata/pi-blaster - Adds PWM to all the Pi's GPIO, allowing us to vary LED intensity
+[*pi-blaster.js*](https://github.com/sarfata/pi-blaster) - Adds PWM to all the Pi's GPIO, allowing us to vary LED intensity
+
+[*color-transition.js*](http://akinuri.com/exps/color-transition/) - Algorithms for smooth color transitions
