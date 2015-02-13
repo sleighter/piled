@@ -51,4 +51,4 @@ The Pi's GPIO cannot directly power leds, a driver board is required. [This Adaf
 
 [*pi-blaster.js*](https://github.com/sarfata/pi-blaster) - Adds PWM to all the Pi's GPIO, allowing us to vary LED intensity
 
-[*color-transition.js*](http://akinuri.com/exps/color-transition/) - Algorithms for smooth color transitions
+[*transition.js*](http://akinuri.com/exps/color-transition/) - Algorithms for smooth color transitions
