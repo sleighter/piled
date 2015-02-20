@@ -43,6 +43,26 @@ PILED_SERVER_URL=ws://<hostname-of-piled-server> node client.js
 ### Run it - Recommended
 To set the client to run at start-up, check out [node-startup](https://github.com/chovy/node-startup) for a nicely written init.d script for node apps.
 
+## Usage
+#### Turn on (uses last color or white if first run)
+```
+curl -X POST http://<hostname-of-piled-server>/on
+```
+#### Set color
+```
+# Set color using css color names
+curl -H "Content-Type: application/json" -d '{"color":"teal"}' http://<hostname-of-piled-server>/color
+# Or hex codes
+curl -H "Content-Type: application/json" -d '{"color":"#00FFFF"}' http://<hostname-of-piled-server>/color
+# Or an RGB object
+curl -H "Content-Type: application/json" -d '{"color":{"r":0, "g": 255, "b": 255}}' http://<hostname-of-piled-server>/color
+```
+#### Turn off
+```
+curl -X POST http://<hostname-of-piled-server>/off
+```
+
+
 # Hardware
 The Pi's GPIO cannot directly power leds, a driver board is required. [This Adafruit tutorial](https://learn.adafruit.com/rgb-led-strips/usage) provides a good basic design for powering led strip lights.
 
