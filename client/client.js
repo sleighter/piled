@@ -16,23 +16,31 @@ socket.on('power', function(data) {
 });
 
 socket.on('transition', function(data) {
-  var rbg = data.color;
+  var rbg = normalizeColors(data.color);
   var timeMs = data.timeMs;
   LEDController.transition(rgb, timeMs);
 });
 
 socket.on('color', function(colors) {
-  var rgb = colors;
+  var rgb = normalizeColors(colors);
   console.log("Colors are: " + colors)
-  if(typeof colors == "string"){
-    rgb = new RGBColor(colors);
-    if(!rgb.ok){
-      console.log("Error parsing color data.");
-      return;
-    }
-  }
+  
   if(rgb){
     console.log("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
     LEDController.setColor(rgb);
   }
 });
+
+function normalizeColors(colors){
+  if(typeof colors == "string"){
+    var rgb = new RGBColor(colors);
+    if(!rgb.ok){
+      console.log("Error parsing color data.");
+      return rgb;
+    }
+  } else if (rgb.r && rgb.g && rgb.b) {
+    return rgb;
+  } else { 
+    return { r: 0, g: 0, b: 0 }; 
+  }
+}
