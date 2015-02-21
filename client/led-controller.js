@@ -17,6 +17,16 @@ function setPower(on){
   }
 }
 
+function transition(rgb, timeMs){
+  db.get(LAST_COLOR_KEY, function(err, last_color){
+    if(!err){
+      console.log("Transitioning to " + formatColor(rgb) + " over " + timeMS + "ms")
+      ColorController.transition(last_color, rgb, timeMS);
+      db.save(LAST_COLOR_KEY, rgb);
+    }
+  });
+}
+
 function setColor(colorParams){
   var params = {
     color: colorParams,
