@@ -16,7 +16,7 @@ socket.on('power', function(data) {
 });
 
 socket.on('transition', function(data) {
-  var rbg = data.targetColor;
+  var rbg = data.color;
   var timeMs = data.timeMs;
   LEDController.transition(rgb, timeMs);
 });
