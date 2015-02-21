@@ -29,6 +29,14 @@ app.post('/color', function(req, resp) {
   resp.send("Set color to: " + params);
 });
 
+app.post('/transition', function(req, resp) {
+  var params = req.body;
+  io.emit('transition', params);
+  var msg = "Transition to " + params.color + " over " + params.timeMs + "ms";
+  console.log(msg);
+  resp.send(msg)
+})
+
 io.on('connection', function(socket){
   console.log("New connection.");
 });
