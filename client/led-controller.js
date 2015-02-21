@@ -2,7 +2,7 @@ var LAST_COLOR_KEY = 'last-color';
 var ColorController = require('./color-controller.js');
 var Store = require('jfs');
 var db = new Store("data");
-module.exports = { setPower: setPower, setColor: setColor };
+module.exports = { setPower: setPower, setColor: setColor, transition: transition };
 function setPower(on){
   if(on){
     db.get(LAST_COLOR_KEY, function(err, last_color){
@@ -18,10 +18,11 @@ function setPower(on){
 }
 
 function transition(rgb, timeMs){
+  console.log(rgb);
   db.get(LAST_COLOR_KEY, function(err, last_color){
     if(!err){
-      console.log("Transitioning to " + formatColor(rgb) + " over " + timeMS + "ms")
-      ColorController.transition(last_color, rgb, timeMS);
+      console.log("Transitioning to " + formatColor(rgb) + " over " + timeMs + "ms")
+      ColorController.transition(last_color, rgb, timeMs);
       db.save(LAST_COLOR_KEY, rgb);
     }
   });
