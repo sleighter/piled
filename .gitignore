@@ -28,3 +28,6 @@ node_modules
 .lock-wscript
 
 .env
+log/
+pid/
+data/

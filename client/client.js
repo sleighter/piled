@@ -16,8 +16,7 @@ socket.on('power', function(data) {
 });
 
 socket.on('transition', function(data) {
-  console.log("Colors are: " + data.color)
-  var rgb = normalizeColors(data.color);
+  var rbg = normalizeColors(data.color);
   var timeMs = data.timeMs;
   LEDController.transition(rgb, timeMs);
 });
@@ -37,10 +36,11 @@ function normalizeColors(colors){
     var rgb = new RGBColor(colors);
     if(!rgb.ok){
       console.log("Error parsing color data.");
+      return rgb;
     }
-    return rgb;
   } else if (rgb.r && rgb.g && rgb.b) {
     return rgb;
+  } else { 
+    return { r: 0, g: 0, b: 0 }; 
   }
-  return { r: 0, g: 0, b: 0 }; 
 }
