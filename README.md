@@ -70,3 +70,5 @@ The Pi's GPIO cannot directly power leds, a driver board is required. [This Adaf
 [*rgbcolor.js*](http://www.phpied.com/rgb-color-parser-in-javascript/) - Converts css colors and hex codes to easy-to-use `{r:0, g:0, b:0}` objects. - Converted to a node module and included in this repo.
 
 [*pi-blaster.js*](https://github.com/sarfata/pi-blaster) - Adds PWM to all the Pi's GPIO, allowing us to vary LED intensity
+
+[*transition.js*](http://akinuri.com/exps/color-transition/) - Algorithms for smooth color transitions
