@@ -15,6 +15,12 @@ socket.on('power', function(data) {
   LEDController.setPower(power);
 });
 
+socket.on('transition', function(data) {
+  var rbg = data.targetColor;
+  var timeMs = data.timeMs;
+  LEDController.transition(rgb, timeMs);
+});
+
 socket.on('color', function(colors) {
   var rgb = colors;
   console.log("Colors are: " + colors)
