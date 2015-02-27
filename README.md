@@ -17,8 +17,8 @@ SSH to your Pi, update apt-get, install git, node, and npm, and clone piled repo
 ```
 ssh pi@<ip-of-raspberry-pi>
 sudo apt-get update
-sudo apt-get install git node npm
-
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb 
+sudo dpkg -i node_latest_armhf.deb
 git clone https://github.com/sleighter/piled.git
 cd piled/client
 ```
