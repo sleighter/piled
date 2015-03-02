@@ -78,9 +78,26 @@ curl -X POST http://<hostname-of-piled-server>/off
 # Hardware
 The Pi's GPIO cannot directly power leds, a driver board is required. [This Adafruit tutorial](https://learn.adafruit.com/rgb-led-strips/usage) provides a good basic design for powering led strip lights.
 
+
+# Alternative - Using pre-build LED strip controllers
+If building a driver board isn't your thing, or you'd like to make more than a few controlled strips, it's possible to use the mass-produced IR-controlled LED drivers included in many Amazon packages. It is far faster and usually cheaper to buy these units than to build your own drivers. See [RGB Strip Controller/Driver](http://www.amazon.com/SUPERNIGHT-TM-Remote-Controller-Light/dp/B00AF5YOK2/ref=sr_1_1?ie=UTF8&qid=1425274459&sr=8-1&keywords=rgb+led+strip+controller). To this end, I have also included a controller module to permit direct control of these units using the IR control input.
+
+The primary downside of this approach is that we are limited by the control set provided by the microcontroller inside the driver unit, which roughly maps the keys of the included 44-key remote. The fine-grained and parallel control afforded by directly controlling each channel is not available here. Instead, we must control lights as we would with the remote: by choosing preset colors, or individual adjusting the brightness of each channel in somewhat larger stops. Transitions are therefore less smooth and selection of non-preset colors less reliable. It is then up to you to balance the ease of hardware configure with the level of control required by your project.
+
+Since this is a solder-less solution, we will not be opening up the driver unit, nor will we be transmitting IR signals to it. Instead, we will directly wire the RPi to the unit's IR input and simulate IR signals on the wire. We will use lirc-rpi, an IR driver, to produce the signal outputs.
+
+First, cut off the existing IR receiver, making note of the connector wire orientation. With the receiver facing you, the wires are, from left to right: Signal, Ground, Vcc(+5v). Ground and Vcc connect to a Ground and +5v pin of the RPi. Unfortunately, the +5v output from the driver unit is not sufficient to power the RPi, so we will still need two power supplies. One for the driver unit and one for the RPi. Finally wire the signal line to a GPIO pin. Here I chose GPIO 21.
+
+Second, install and configure lirc-rpi. See [Setting Up lirc on the Raspberry Pi](http://alexba.in/blog/2013/01/06/setting-up-lirc-on-the-raspberrypi/). We must disable the softcarrier, as this will transmit our signals on a carrier frequency. If you'd like to capture the IR signals yourself, see the note below. For ease, if using the SUPERNIGHT or clone driver unit, you can use the included config file, shared by Raudi [here](http://forum.osmc.tv/showthread.php?tid=7142)
+
+Note that lirc-rpi includes some awesome utilities for recording signals to create your own IR config files. With a basic breadboard and some lead wires, you can use the IR receiver cut from the driver unit to create an IR input for the RPi. In the example above, you'll note that I configured an input on GPIO pin 20. To use the IR receiver as an input, wire the signal lead to pin 20, and the GND and Vcc leads to the matching pins on the RPi. Review the manual for the `irrecord` command for more information on capturing IR signals for any remote.
+
+
 # Other Components
 [*rgbcolor.js*](http://www.phpied.com/rgb-color-parser-in-javascript/) - Converts css colors and hex codes to easy-to-use `{r:0, g:0, b:0}` objects. - Converted to a node module and included in this repo.
 
 [*pi-blaster.js*](https://github.com/sarfata/pi-blaster) - Adds PWM to all the Pi's GPIO, allowing us to vary LED intensity
 
 [*transition.js*](http://akinuri.com/exps/color-transition/) - Algorithms for smooth color transitions
+
+[*lirc*](http://www.lirc.org) and [*lirc-rpi*](http://aron.ws/projects/lirc_rpi/)
