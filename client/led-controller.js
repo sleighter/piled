@@ -15,6 +15,7 @@ function setPower(on){
   }else{
     setColor({r:0, b:0, g:0});
   }
+  ColorController.power();
 }
 
 function transition(rgb, timeMs){

@@ -9,16 +9,20 @@ var LED_RED   = 'led-red';
 var LED_GREEN = 'led-blue';
 var LED_BLUE  = 'led-green';
 
-module.exports = { set: set, transition: transition}
+module.exports = { power: power, set: set, transition: transition}
+
+function power(){
+  send_ir_command(LED_POWER)
+}
 
 function set(colorParams){
   try{
     var color = colorParams.color;
-    if(color.r >= 255) {
+    if(color.r > 0 && color.b == 0 && color.g == 0) {
       send_ir_command(LED_RED);
-    } else if(color.g >= 255) {
+    } else if(color.g > 0 && color.r == 0 && color.b == 0) {
       send_ir_command(LED_GREEN);
-    } else if(color.b >= 255) {
+    } else if(color.b > 0 && color.r == 0 && color.g == 0) {
       send_ir_command(LED_BLUE);
     }
   } catch(ex) {
