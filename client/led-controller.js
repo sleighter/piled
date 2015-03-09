@@ -1,5 +1,5 @@
 var LAST_COLOR_KEY = 'last-color';
-var ColorController = require('./color-controller.js');
+var ColorController = require('./ir-color-controller.js');
 var Store = require('jfs');
 var db = new Store("data");
 module.exports = { setPower: setPower, setColor: setColor, transition: transition };
