@@ -41,7 +41,7 @@ app.post('/transition', function(req, resp) {
 app.post('/circleci', function(req, resp) {
   console.log(util.inspect(req.body, {showHidden: false, depth: null}));
   var params = req.body.payload;
-  var project = params.username + "/" + params.reponame;
+  var project = params.username + "/" + params.reponame + "/" + params.branch;
   switch (params.outcome) {
     case "success":
       console.log("Setting success");
