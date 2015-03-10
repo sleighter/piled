@@ -2,7 +2,7 @@ var LAST_COLOR_KEY = 'last-color';
 var ColorController = require('./ir-color-controller.js');
 var Store = require('jfs');
 var db = new Store("data");
-module.exports = { setPower: setPower, setColor: setColor, transition: transition };
+module.exports = { setPower: setPower, setColor: setColor, transition: transition, flash: flash };
 function setPower(on){
   if(on){
     db.get(LAST_COLOR_KEY, function(err, last_color){
@@ -44,6 +44,11 @@ function setColor(colorParams){
   };
 
   ColorController.set(params)
+}
+
+function flash(timeMs, callback){
+  ColorController.flash()
+  setTimeout(callback, timeMs);
 }
 
 function formatColor(color){

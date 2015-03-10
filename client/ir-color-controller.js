@@ -9,21 +9,21 @@ var LED_RED   = 'led-red';
 var LED_GREEN = 'led-blue';
 var LED_BLUE  = 'led-green';
 
-module.exports = { power: power, set: set, transition: transition}
+module.exports = { power: power, set: set, transition: transition, flash: flash}
 
 function power(){
-  send_ir_command(LED_POWER)
+  sendIRCommand(LED_POWER)
 }
 
 function set(colorParams){
   try{
     var color = colorParams.color;
     if(color.r > 0 && color.b == 0 && color.g == 0) {
-      send_ir_command(LED_RED);
+      sendIRCommand(LED_RED);
     } else if(color.g > 0 && color.r == 0 && color.b == 0) {
-      send_ir_command(LED_GREEN);
+      sendIRCommand(LED_GREEN);
     } else if(color.b > 0 && color.r == 0 && color.g == 0) {
-      send_ir_command(LED_BLUE);
+      sendIRCommand(LED_BLUE);
     }
   } catch(ex) {
     console.log(ex);
@@ -34,7 +34,12 @@ function transition(current, color, time_ms){
 
 }
 
-function send_ir_command(cmd)
+function flash()
+{
+  sendIRCommand(LED_FLASH);
+}
+
+function sendIRCommand(cmd)
 {
   child = exec(
     "irsend SEND_ONCE led " + cmd,
