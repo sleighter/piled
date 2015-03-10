@@ -47,7 +47,7 @@ app.post('/circleci', function(req, resp) {
       console.log("Setting success");
       io.emit(project, "green");
       break;
-    case "failure":
+    case "failed":
       console.log("Setting failure");
       io.emit(project, "red");
       break;
