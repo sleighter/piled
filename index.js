@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
+var util = require('util');
 server.listen(process.env.PORT);
 
 app.use(express.static(__dirname + '/public'));
@@ -36,6 +37,25 @@ app.post('/transition', function(req, resp) {
   console.log(msg);
   resp.send(msg)
 })
+
+app.post('/circleci', function(req, resp) {
+  console.log(util.inspect(req.body, {showHidden: false, depth: null}));
+  var params = req.body.payload;
+  var project = params.username + "/" + params.reponame;
+  switch (params.outcome) {
+    case "success":
+      console.log("Setting success");
+      io.emit(project, "green");
+      break;
+    case "failure":
+      console.log("Setting failure");
+      io.emit(project, "red");
+      break;
+    default:
+      break;
+  }
+  resp.send("OK")
+});
 
 io.on('connection', function(socket){
   console.log("New connection.");

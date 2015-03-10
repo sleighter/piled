@@ -1,4 +1,5 @@
 var WS_URL = process.env.PILED_SERVER_URL;
+var CIRCLE_PROJECT = process.env.CIRCLE_CI_PROJECT;
 var io = require('socket.io-client');
 var socket = io(WS_URL);
 
@@ -25,12 +26,22 @@ socket.on('transition', function(data) {
 socket.on('color', function(colors) {
   var rgb = normalizeColors(colors);
   console.log("Colors are: " + colors)
-  
+
   if(rgb){
     console.log("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
     LEDController.setColor(rgb);
   }
 });
+
+if(CIRCLE_PROJECT){
+  socket.on(CIRCLE_PROJECT, function(colors){
+    var rgb = normalizeColors(colors);
+    console.log(CIRCLE_PROJECT + " status: " + colors);
+    if(rgb){
+      LEDController.setColor(rgb);
+    }
+  });
+}
 
 function normalizeColors(colors){
   if(typeof colors == "string"){
@@ -42,5 +53,5 @@ function normalizeColors(colors){
   } else if (rgb.r && rgb.g && rgb.b) {
     return rgb;
   }
-  return { r: 0, g: 0, b: 0 }; 
+  return { r: 0, g: 0, b: 0 };
 }
