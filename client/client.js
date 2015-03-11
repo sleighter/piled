@@ -6,8 +6,10 @@ var socket = io(WS_URL);
 var RGBColor = require('./rgbcolor.js');
 var LEDController = require('./led-controller.js');
 
+console.log("Setting up listeners");
+
 socket.on('connection', function(){
-  console.log('connected');
+  console.log('connected to server at ' + WS_URL);
 });
 
 socket.on('power', function(data) {
@@ -33,6 +35,7 @@ socket.on('color', function(colors) {
   }
 });
 
+console.log("Listening for Circle CI Project: " + CIRCLE_PROJECT);
 if(CIRCLE_PROJECT){
   socket.on(CIRCLE_PROJECT, function(colors){
     var rgb = normalizeColors(colors);
