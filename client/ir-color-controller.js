@@ -44,10 +44,14 @@ function sendIRCommand(cmd)
   child = exec(
     "irsend SEND_ONCE led " + cmd,
     function (error, stdout, stderr) {
-      sys.print('stdout: ' + stdout);
-      sys.print('stderr: ' + stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
+      if (stdout && stdout.length > 0){
+        console.log('INFO: ' + stdout);
+      }
+      if (stderr && stderr.length > 0){
+        console.log('ERROR: ' + stderr);
+      }
+      if (error && error.length > 0) {
+        console.log('ERROR: ' + error);
       }
     }
   );
