@@ -1,25 +1,26 @@
 var WS_URL = process.env.PILED_SERVER_URL;
 var CIRCLE_PROJECT = process.env.CIRCLE_CI_PROJECT;
+var logger = require('./logger.js');
 var io = require('socket.io-client');
 var socket = io(WS_URL);
 
 var RGBColor = require('./rgbcolor.js');
 var LEDController = require('./led-controller.js');
 
-console.log("Setting up listeners");
+logger.info("Setting up listeners");
 
 socket.on('connection', function(){
-  console.log('connected to server at ' + WS_URL);
+  logger.info('connected to server at ' + WS_URL);
 });
 
 socket.on('power', function(data) {
   var power = data == 'on';
-  console.log("Turning power " + power ? 'ON' : 'OFF');
+  logger.debug("Turning power " + power ? 'ON' : 'OFF');
   LEDController.setPower(power);
 });
 
 socket.on('transition', function(data) {
-  console.log("Colors are: " + data.color)
+  logger.debug("Colors are: " + data.color)
   var rgb = normalizeColors(data.color);
   var timeMs = data.timeMs;
   LEDController.transition(rgb, timeMs);
@@ -30,7 +31,7 @@ socket.on('color', function(colors) {
   console.log("Colors are: " + colors)
 
   if(rgb){
-    console.log("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
+    logger.debug("Setting to R:" + rgb.r + " G:" + rgb.g + " B:" + rgb.b);
     LEDController.setColor(rgb);
   }
 });
@@ -39,7 +40,7 @@ console.log("Listening for Circle CI Project: " + CIRCLE_PROJECT);
 if(CIRCLE_PROJECT){
   socket.on(CIRCLE_PROJECT, function(colors){
     var rgb = normalizeColors(colors);
-    console.log(CIRCLE_PROJECT + " status: " + colors);
+    logger.info(CIRCLE_PROJECT + " status: " + colors);
     if(rgb){
       LEDController.setColor(rgb);
       LEDController.flash(5000, function(){ LEDController.setColor(rgb); });
@@ -51,7 +52,7 @@ function normalizeColors(colors){
   if(typeof colors == "string"){
     var rgb = new RGBColor(colors);
     if(!rgb.ok){
-      console.log("Error parsing color data.");
+      logger.error("Error parsing color data.");
     }
     return rgb;
   } else if (rgb.r && rgb.g && rgb.b) {

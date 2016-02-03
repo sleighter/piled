@@ -1,6 +1,7 @@
 var sys = require('sys');
 var exec = require('child_process').exec;
 var child;
+var logger = require('./logger.js');
 
 var LED_POWER = 'led-power';
 var LED_FLASH = 'led-flash';
@@ -26,7 +27,7 @@ function set(colorParams){
       sendIRCommand(LED_BLUE);
     }
   } catch(ex) {
-    console.log(ex);
+    logger.error(ex);
   }
 }
 
@@ -45,13 +46,13 @@ function sendIRCommand(cmd)
     "irsend SEND_ONCE led " + cmd,
     function (error, stdout, stderr) {
       if (stdout && stdout.length > 0){
-        console.log('INFO: ' + stdout);
+        logger.info(stdout);
       }
       if (stderr && stderr.length > 0){
-        console.log('ERROR: ' + stderr);
+        logger.error(stderr);
       }
       if (error && error.length > 0) {
-        console.log('ERROR: ' + error);
+        logger.error(error);
       }
     }
   );

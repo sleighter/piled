@@ -4,6 +4,7 @@ var BLUE_PIN = process.env.BLUE_PIN ? process.env.BLUE_PIN : 22;
 
 var Blaster = require('pi-blaster.js');
 
+var logger = require('./logger.js');
 module.exports = { set: set, transition: transition };
 
 function set(colorParams){
@@ -35,7 +36,7 @@ function transition(current, color, time_ms) {
     stepEach.push(Math.abs(distance[i]));
   }
   var steps = Math.max.apply(null, stepEach);
-  console.log("steps: " + steps);
+  logger.debug("steps: " + steps);
 
   var increment = [steps == 0 ? 0 : Math.ceil(distance[0]/steps), steps == 0 ? 0 : Math.ceil(distance[1]/steps), steps == 0 ? 0 : Math.ceil(distance[2]/steps)];
   var direction = [distance[0] == 0 ? 0 : stepEach[0]/distance[0], increment[1] == 0 ? 0 : stepEach[1]/distance[1], distance[2] == 0 ? 0 : distance[2]/increment[2]];

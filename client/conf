@@ -1,0 +1,2 @@
+PILED_SERVER_URL=ws://piled.herokuapp.com
+CIRCLE_CI_PROJECT=orderup/tokyo/master
