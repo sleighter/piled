@@ -6,8 +6,8 @@ var LED_POWER = 'led-power';
 var LED_FLASH = 'led-flash';
 
 var LED_RED   = 'led-red';
-var LED_GREEN = 'led-blue';
-var LED_BLUE  = 'led-green';
+var LED_GREEN = 'led-green';
+var LED_BLUE  = 'led-blue';
 
 module.exports = { power: power, set: set, transition: transition, flash: flash}
 
