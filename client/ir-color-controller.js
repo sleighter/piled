@@ -34,9 +34,19 @@ function transition(current, color, time_ms){
 
 }
 
-function flash()
+function flash(freqHz, totalMs)
 {
-  sendIRCommand(LED_FLASH);
+  var cycles = (totalMs / 1000) * freqHz;
+  var cycleLengthMs = (1.0 / freqHz) * 1000;
+  var interval = setInterval(function(){
+    cycles = cycles - 0.5;
+    if(cycles < 0){
+      clearInterval(interval);
+      return;
+    }
+
+    sendIRCommand(LED_POWER);
+  }, (cycleLengthMs / 2));
 }
 
 function sendIRCommand(cmd)

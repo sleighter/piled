@@ -39,7 +39,7 @@ if(CIRCLE_PROJECT){
     console.log(CIRCLE_PROJECT + " status: " + colors);
     if(rgb){
       LEDController.setColor(rgb);
-      LEDController.flash(5000, function(){ LEDController.setColor(rgb); });
+      LEDController.flash(5000);
     }
   });
 }
