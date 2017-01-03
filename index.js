@@ -7,7 +7,8 @@ var util = require('util');
 server.listen(process.env.PORT);
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.get('/', function(request, response) {
   response.send('Hello World!');
