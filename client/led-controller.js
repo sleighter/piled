@@ -47,9 +47,8 @@ function setColor(colorParams){
   ColorController.set(params)
 }
 
-function flash(timeMs, callback){
-  ColorController.flash()
-  setTimeout(callback, timeMs);
+function flash(timeMs){
+  ColorController.flash(2,timeMs)
 }
 
 function formatColor(color){

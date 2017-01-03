@@ -43,7 +43,7 @@ if(CIRCLE_PROJECT){
     logger.info(CIRCLE_PROJECT + " status: " + colors);
     if(rgb){
       LEDController.setColor(rgb);
-      LEDController.flash(5000, function(){ LEDController.setColor(rgb); });
+      LEDController.flash(5000);
     }
   });
 }
