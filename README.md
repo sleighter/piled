@@ -19,7 +19,7 @@ ssh pi@<ip-of-raspberry-pi>
 sudo apt-get update
 sudo apt-get install autoconf
 
-wget http://node-arm.herokuapp.com/node_latest_armhf.deb 
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb
 sudo dpkg -i node_latest_armhf.deb
 
 git clone https://github.com/sarfata/pi-blaster
@@ -53,7 +53,9 @@ PILED_SERVER_URL=ws://<hostname-of-piled-server> node client.js
 ```
 
 ### Run it - Recommended
-To set the client to run at start-up, check out [node-startup](https://github.com/chovy/node-startup) for a nicely written init.d script for node apps.
+To set the client to run at start-up, place configuration in `conf` and copy the `piled-service` to `/etc/init.d/`
+
+Sourced from [node-startup](https://github.com/chovy/node-startup).
 
 ## Usage
 #### Turn on (uses last color or white if first run)
@@ -88,7 +90,57 @@ Since this is a solder-less solution, we will not be opening up the driver unit,
 
 First, cut off the existing IR receiver, making note of the connector wire orientation. With the receiver facing you, the wires are, from left to right: Signal, Ground, Vcc(+5v). Ground and Vcc connect to a Ground and +5v pin of the RPi. Unfortunately, the +5v output from the driver unit is not sufficient to power the RPi, so we will still need two power supplies. One for the driver unit and one for the RPi. Finally wire the signal line to a GPIO pin. Here I chose GPIO 21.
 
-Second, install and configure lirc-rpi. See [Setting Up lirc on the Raspberry Pi](http://alexba.in/blog/2013/01/06/setting-up-lirc-on-the-raspberrypi/). We must disable the softcarrier, as this will transmit our signals on a carrier frequency. If you'd like to capture the IR signals yourself, see the note below. For ease, if using the SUPERNIGHT or clone driver unit, you can use the included config file, shared by Raudi [here](http://forum.osmc.tv/showthread.php?tid=7142)
+Second, install and configure lirc-rpi. See [Setting Up lirc on the Raspberry Pi](http://alexba.in/blog/2013/01/06/setting-up-lirc-on-the-raspberrypi/). We must disable the softcarrier, as this will transmit our signals on a carrier frequency. If you'd like to capture the IR signals yourself, see the note below. For ease, if using the SUPERNIGHT or clone driver unit, you can use the included config file, shared by Raudi [here](http://forum.osmc.tv/showthread.php?tid=7142) by copying `lircd.conf` to `/etc/lirc/lircd.conf`
+
+```
+sudo apt-get install lirc
+
+sudo tee /etc/modprobe.d/lirc-rpi.conf <<EOF > /dev/null
+options lirc_rpi gpio_in_pin=22 gpio_out_pin=21 softcarrier=0
+EOF
+
+sudo tee /etc/modules <<EOF > /dev/null
+lirc_dev
+lirc_rpi gpio_out_pin=21 softcarrier=0
+EOF
+
+sudo tee /etc/lirc/hardware.conf <<EOF > /dev/null
+########################################################
+# /etc/lirc/hardware.conf
+#
+# Arguments which will be used when launching lircd
+LIRCD_ARGS="--uinput"
+
+# Don't start lircmd even if there seems to be a good config file
+# START_LIRCMD=false
+
+# Don't start irexec, even if a good config file seems to exist.
+# START_IREXEC=false
+
+# Try to load appropriate kernel modules
+LOAD_MODULES=true
+
+# Run "lircd --driver=help" for a list of supported drivers.
+DRIVER="default"
+# usually /dev/lirc0 is the correct setting for systems using udev
+DEVICE="/dev/lirc0"
+MODULES="lirc_rpi"
+
+# Default configuration files for your hardware if any
+LIRCD_CONF=""
+LIRCMD_CONF=""
+########################################################
+EOF
+
+sudo echo "dtoverlay=lirc-rpi" >> /boot/config.txt
+
+# reboot
+sudo shutdown -r now
+
+# reconnect and test that it works by using irsend to send something
+irsend SEND_ONCE led led-green
+```
+
 
 Note that lirc-rpi includes some awesome utilities for recording signals to create your own IR config files. With a basic breadboard and some lead wires, you can use the IR receiver cut from the driver unit to create an IR input for the RPi. In the example above, you'll note that I configured an input on GPIO pin 20. To use the IR receiver as an input, wire the signal lead to pin 20, and the GND and Vcc leads to the matching pins on the RPi. Review the manual for the `irrecord` command for more information on capturing IR signals for any remote.
 
